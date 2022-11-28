@@ -1,0 +1,34 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Docker Login
+      env:
+        DOCKER_USER: ${{secrets.DOCKER_USER}}
+        DOCKER_PASSWORD: ${{secrets.DOCKER_PASSWORD}}
+      run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+        
+    - name: Build the API Backend image
+      run: docker build ./backend --file Dockerfile --tag ${{secrets.DOCKER_USER}}/sentiment-analysis-api-backend
+      
+    - name: Build the API frontend image
+      run: docker build ./frontend --file Dockerfile --tag ${{secrets.DOCKER_USER}}/sentiment-analysis-api-frontend
+      
+    - name: Docker Push Backend
+      run: docker push ${{secrets.DOCKER_USER}}/sentiment-analysis-api-backend
+      
+    - name: Docker Push Frontend
+      run: docker push ${{secrets.DOCKER_USER}}/sentiment-analysis-api-backend
