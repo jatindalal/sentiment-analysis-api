@@ -4,8 +4,8 @@ from process_text import Preprocessor
 class Classifier:
     def __init__(self) -> None:
         # load model and vectorizer
-        self.model = pickle.load(open("models/classifier.pkl", "rb"))
-        self.vectorizer = pickle.load(open("models/vectorizer.pkl", "rb"))
+        self.model = pickle.load(open("classifier.pkl", "rb"))
+        self.vectorizer = pickle.load(open("vectorizer.pkl", "rb"))
 
     def classify(self, text):
         # Preprocess given string
