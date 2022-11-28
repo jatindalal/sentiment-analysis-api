@@ -22,10 +22,12 @@ jobs:
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         
     - name: Build the API Backend image
-      run: docker build ./backend --file Dockerfile --tag ${{secrets.DOCKER_USER}}/sentiment-analysis-api-backend
+      working-directory: ./backend
+      run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/sentiment-analysis-api-backend
       
     - name: Build the API frontend image
-      run: docker build ./frontend --file Dockerfile --tag ${{secrets.DOCKER_USER}}/sentiment-analysis-api-frontend
+      working-directory: ./frontend
+      run: docker build . --file Dockerfile --tag ${{secrets.DOCKER_USER}}/sentiment-analysis-api-frontend
       
     - name: Docker Push Backend
       run: docker push ${{secrets.DOCKER_USER}}/sentiment-analysis-api-backend
