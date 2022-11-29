@@ -2,12 +2,12 @@ version: '3'
 
 services:
   frontend:
-    image: thassiboy/sentiment-analysis-api-frontend
+    build: frontend
     ports:
       - 8080:8080
     depends_on:
       - backend
   backend:
-    image: thassiboy/sentiment-analysis-api-backend
+    build: backend
     ports:
       - 80:80
